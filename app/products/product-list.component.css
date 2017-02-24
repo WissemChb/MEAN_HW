@@ -1,0 +1,9 @@
+thead {
+    color: #337AB7;
+}
+.panel{
+    opacity: 0.87;
+}
+body{
+    background: url("../assets/images/background.png");
+}
