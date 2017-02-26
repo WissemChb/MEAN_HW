@@ -3,23 +3,127 @@
     <div class="panel-heading">
         {{pageTitle}}
     </div>
+    <form (ngSubmit)="save()" novalidate [formGroup] = "customerForm">
     <div class="panel-body">
         <div class="container">
-        <form>
-            <div class="form-group">
-                <input type="email" class="form-control" id="usr" required placeholder="Email (required)">
+
+            <!-- First Name -->
+
+            <div [ngClass]="{'has-error':(customerForm.get('firstName').touched || customerForm.get('firstName').dirty ) && !customerForm.get('firstName').valid}">
+                <div class="form-group">
+                    <label for="firstname" class="control-label">First Name</label>
+                    <input type="text" class="form-control" id="firstname" name="firstname"
+                            placeholder=" First name (required)"
+                            formControlName="firstName">
+                </div>
+                <span class="help-block text-danger" *ngIf="(customerForm.get('firstName').touched || customerForm.get('firstName').dirty) && customerForm.get('firstName').errors">
+                   <span *ngIf="customerForm.get('secondName').errors.required">
+                        Please enter your First name
+                    </span>
+                     <span *ngIf="customerForm.get('secondName').errors.minlength">
+                        Name should be more than 3 caracters
+                    </span>
+                </span>
             </div>
-            <div class="form-group">
-                <input type="password" class="form-control" id="pwd1" required placeholder="password (required)">
+
+            <!-- second name -->
+
+            <div [ngClass]="{'has-error':(customerForm.get('secondName').touched || customerForm.get('secondName').dirty ) && !customerForm.get('secondName').valid}">
+                <div class="form-group">
+                    <label for="secondname" class="control-label">Second Name</label>
+                    <input type="text" class="form-control" id="secondname" name="secondname"
+                           placeholder=" Second name (required)"
+                           formControlName="secondName">
+                </div>
+                <span class="help-block text-danger" *ngIf="(customerForm.get('secondName').touched || customerForm.get('secondName').dirty) && customerForm.get('secondName').errors">
+                    <span *ngIf="customerForm.get('secondName').errors.required">
+                        Please enter your Second name
+                    </span>
+                     <span *ngIf="customerForm.get('secondName').errors.minlength">
+                        Name should be more than 3 caracters
+                    </span>
+
+                </span>
             </div>
-            <div class="form-group">
-                <input type="password" class="form-control" id="pwd2" required placeholder="Confirm password (required)">
+
+            <!-- Username-->
+
+            <div [ngClass]="{'has-error':(customerForm.get('username').touched || customerForm.get('username').dirty ) && !customerForm.get('username').valid}">
+                <div class="form-group">
+                    <label for="username" class="control-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username"
+                           placeholder=" username (required)"
+                           formControlName="username">
+                </div>
+                <span class="help-block text-danger" *ngIf="(customerForm.get('username').touched || customerForm.get('username').dirty) && customerForm.get('username').errors">
+                    Please enter your username
+                </span>
             </div>
-        </form>
+
+            <!--  Email -->
+
+            <div [ngClass]="{'has-error':(customerForm.get('email').touched || customerForm.get('email').dirty ) && !customerForm.get('email').valid}">
+                <div class="form-group">
+                    <label for="email" class="control-label">Email</label>
+                    <input type="text" class="form-control" id="email" name="email"
+                            placeholder=" Email (required)"
+                           formControlName="email">
+                </div>
+                <span class="help-block text-danger" *ngIf="(customerForm.get('email').touched || customerForm.get('email').dirty) && customerForm.get('email').errors">
+                    <span *ngIf="customerForm.get('email').errors.required">
+                        Please enter your Email
+                    </span>
+                    <span *ngIf="customerForm.get('email').errors.pattern">
+                        email address should be xy@zt
+                    </span>
+
+                </span>
+            </div>
+
+
+            <div formGroupName="passwordMatch"
+                >
+
+                <!-- Password -->
+
+                        <div class="form-group">
+                            <div [ngClass]="{'has-error':(customerForm.get('passwordMatch.password').touched ||
+                                customerForm.get('passwordMatch.password').dirty )
+                                && !customerForm.get('passwordMatch.password').valid}">
+                                <label for="password" class="control-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password"
+                                       placeholder=" Password (required)"
+                                       formControlName="password">
+                                        <span class="help-block text-danger" *ngIf="(customerForm.get('passwordMatch.password').touched ||
+                                            customerForm.get('passwordMatch.password').dirty) &&
+                                            customerForm.get('passwordMatch.password').errors">
+                                            Please enter your Password
+                                        </span>
+                            </div>
+
+                        </div>
+
+            <!-- Confirm Password -->
+
+
+                    <div class="form-group">
+                        <div [ngClass]="{'has-error':passwordMessage} ">
+                            <label for="confirmPassword" class="control-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                                    placeholder=" Confirm Password(required)"
+                                   formControlName="confirmPassword">
+                            <span class="help-block text-danger" *ngIf="passwordMessage">
+                                {{passwordMessage}}
+                            </span>
+                        </div>
+                    </div>
+            </div>
         </div>
     </div>
     <div class="panel-footer">
-        <button class="btn btn-primary">Save</button>
+        <button type ="submit" class="btn btn-primary" [disabled]="!customerForm.valid">
+            Save
+        </button>
     </div>
-
+    </form>
 </div>

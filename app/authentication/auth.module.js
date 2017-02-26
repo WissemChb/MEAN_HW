@@ -12,6 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var signUp_component_1 = require("./signUp.component");
 var router_1 = require("@angular/router");
+var forms_1 = require("@angular/forms");
+var platform_browser_1 = require("@angular/platform-browser");
+var login_component_1 = require("./login.component");
 var AuthModel = (function () {
     function AuthModel() {
     }
@@ -21,10 +24,15 @@ AuthModel = __decorate([
     core_1.NgModule({
         imports: [
             router_1.RouterModule.forChild([
-                { path: 'signup', component: signUp_component_1.SignUpComponent }
-            ])
+                { path: 'signup', component: signUp_component_1.SignUpComponent },
+                { path: 'login', component: login_component_1.LoginComponent }
+            ]),
+            forms_1.ReactiveFormsModule,
+            platform_browser_1.BrowserModule
         ],
-        declarations: [signUp_component_1.SignUpComponent],
+        declarations: [signUp_component_1.SignUpComponent,
+            login_component_1.LoginComponent
+        ],
         providers: []
     })
 ], AuthModel);
