@@ -1,3 +1,6 @@
+/**
+ * Created by wissem on 2/26/17.
+ */
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7,19 +10,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-/**
- * Created by wissem on 2/26/17.
- */
+var Login_1 = require("./Login");
 var LoginComponent = (function () {
     function LoginComponent() {
-        this.pageTitle = 'Login';
+        this.pageTitle = "Login";
+        this.user = new Login_1.Login();
     }
+    LoginComponent.prototype.login = function (loginSave) {
+        console.log(loginSave);
+    };
     return LoginComponent;
 }());
 LoginComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        templateUrl: 'login.component.html'
+        templateUrl: 'login.component.html',
+        styleUrls: ['login.component.css']
     })
 ], LoginComponent);
 exports.LoginComponent = LoginComponent;

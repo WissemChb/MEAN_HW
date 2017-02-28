@@ -28,14 +28,18 @@
 
             <!-- second name -->
 
-            <div [ngClass]="{'has-error':(customerForm.get('secondName').touched || customerForm.get('secondName').dirty ) && !customerForm.get('secondName').valid}">
+            <div [ngClass]="{'has-error':(customerForm.get('secondName').touched
+            || customerForm.get('secondName').dirty )
+            && !customerForm.get('secondName').valid}">
                 <div class="form-group">
                     <label for="secondname" class="control-label">Second Name</label>
                     <input type="text" class="form-control" id="secondname" name="secondname"
                            placeholder=" Second name (required)"
                            formControlName="secondName">
                 </div>
-                <span class="help-block text-danger" *ngIf="(customerForm.get('secondName').touched || customerForm.get('secondName').dirty) && customerForm.get('secondName').errors">
+                <span class="help-block text-danger" *ngIf="(customerForm.get('secondName').touched
+                || customerForm.get('secondName').dirty)
+                && customerForm.get('secondName').errors">
                     <span *ngIf="customerForm.get('secondName').errors.required">
                         Please enter your Second name
                     </span>
@@ -48,14 +52,18 @@
 
             <!-- Username-->
 
-            <div [ngClass]="{'has-error':(customerForm.get('username').touched || customerForm.get('username').dirty ) && !customerForm.get('username').valid}">
+            <div [ngClass]="{'has-error':(customerForm.get('username').touched
+            || customerForm.get('username').dirty )
+            && !customerForm.get('username').valid}">
                 <div class="form-group">
                     <label for="username" class="control-label">Username</label>
                     <input type="text" class="form-control" id="username" name="username"
                            placeholder=" username (required)"
                            formControlName="username">
                 </div>
-                <span class="help-block text-danger" *ngIf="(customerForm.get('username').touched || customerForm.get('username').dirty) && customerForm.get('username').errors">
+                <span class="help-block text-danger" *ngIf="(customerForm.get('username').touched
+                || customerForm.get('username').dirty)
+                && customerForm.get('username').errors">
                     Please enter your username
                 </span>
             </div>
@@ -69,7 +77,9 @@
                             placeholder=" Email (required)"
                            formControlName="email">
                 </div>
-                <span class="help-block text-danger" *ngIf="(customerForm.get('email').touched || customerForm.get('email').dirty) && customerForm.get('email').errors">
+                <span class="help-block text-danger" *ngIf="(customerForm.get('email').touched
+                || customerForm.get('email').dirty)
+                && customerForm.get('email').errors">
                     <span *ngIf="customerForm.get('email').errors.required">
                         Please enter your Email
                     </span>

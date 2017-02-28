@@ -12,7 +12,7 @@ import {AuthModel} from "./authentication/auth.module";
 
 @NgModule({
   imports: [
-
+      BrowserModule,
     HttpModule,
     RouterModule.forRoot([
       { path: 'welcome', component: WelcomeComponent },

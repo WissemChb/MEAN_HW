@@ -4,9 +4,10 @@
 import {NgModule} from "@angular/core";
 import {SignUpComponent} from "./signUp.component";
 import {RouterModule} from "@angular/router";
-import {ReactiveFormsModule} from "@angular/forms";
+import {ReactiveFormsModule, FormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
 import {LoginComponent} from "./login.component";
+
 @NgModule({
     imports:[
         RouterModule.forChild([
@@ -14,7 +15,8 @@ import {LoginComponent} from "./login.component";
             {path : 'login' ,component : LoginComponent}
             ]),
         ReactiveFormsModule,
-        BrowserModule
+        BrowserModule,
+        FormsModule
     ],
     declarations:[SignUpComponent,
         LoginComponent

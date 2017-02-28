@@ -28,7 +28,8 @@ AuthModel = __decorate([
                 { path: 'login', component: login_component_1.LoginComponent }
             ]),
             forms_1.ReactiveFormsModule,
-            platform_browser_1.BrowserModule
+            platform_browser_1.BrowserModule,
+            forms_1.FormsModule
         ],
         declarations: [signUp_component_1.SignUpComponent,
             login_component_1.LoginComponent

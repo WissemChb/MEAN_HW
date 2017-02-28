@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{Rx, angular-DefinitelyTyped, angular-ui-bootstrap-DefinitelyTyped, angular2.dev, bootstrap, typescript}" />
+    <file url="PROJECT" libraries="{Rx, angular-DefinitelyTyped, angular-modal-DefinitelyTyped, angular-ui-bootstrap-DefinitelyTyped, angular2.dev, bootstrap, typescript}" />
     <includedPredefinedLibrary name="ECMAScript 6" />
     <includedPredefinedLibrary name="Node.js Core" />
   </component>
