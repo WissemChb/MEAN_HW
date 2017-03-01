@@ -14,6 +14,9 @@ var product_guard_service_1 = require("./product-guard.service");
 var product_filter_pipe_1 = require("./product-filter.pipe");
 var product_service_1 = require("./product.service");
 var shared_module_1 = require("../shared/shared.module");
+var forms_1 = require("@angular/forms");
+var productAddGuard_service_1 = require("./productAddGuard.service");
+var product_edit_component_1 = require("./product-edit.component");
 var ProductModule = (function () {
     function ProductModule() {
     }
@@ -28,17 +31,21 @@ ProductModule = __decorate([
                 { path: 'product/:id',
                     canActivate: [product_guard_service_1.ProductDetailGuard],
                     component: product_detail_component_1.ProductDetailComponent
-                }
-            ])
+                },
+                { path: 'productEdit/:id', canDeactivate: [productAddGuard_service_1.ProductAddGuard], component: product_edit_component_1.ProductEditComponent },
+            ]),
+            forms_1.ReactiveFormsModule
         ],
         declarations: [
             product_list_component_1.ProductListComponent,
             product_detail_component_1.ProductDetailComponent,
-            product_filter_pipe_1.ProductFilterPipe
+            product_filter_pipe_1.ProductFilterPipe,
+            product_edit_component_1.ProductEditComponent
         ],
         providers: [
             product_service_1.ProductService,
-            product_guard_service_1.ProductDetailGuard
+            product_guard_service_1.ProductDetailGuard,
+            productAddGuard_service_1.ProductAddGuard
         ]
     })
 ], ProductModule);

@@ -7,6 +7,8 @@ import {RouterModule} from "@angular/router";
 import {ReactiveFormsModule, FormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
 import {LoginComponent} from "./login.component";
+import {HttpModule} from "@angular/http";
+
 
 @NgModule({
     imports:[
@@ -16,7 +18,8 @@ import {LoginComponent} from "./login.component";
             ]),
         ReactiveFormsModule,
         BrowserModule,
-        FormsModule
+        FormsModule,
+        HttpModule
     ],
     declarations:[SignUpComponent,
         LoginComponent

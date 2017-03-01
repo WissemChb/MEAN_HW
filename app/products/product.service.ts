@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
@@ -18,13 +18,12 @@ export class ProductService {
     getProducts(): Observable<IProduct[]> {
         return this._http.get(this._productUrl)
             .map((response: Response) => <IProduct[]> response.json())
-            .do(data => console.log('All: ' +  JSON.stringify(data)))
             .catch(this.handleError);
     }
 
     getProduct(id: number): Observable<IProduct> {
         return this.getProducts()
-            .map((products: IProduct[]) => products.find(p => p.productId === id));
+            .map((products: IProduct[]) => products.find(p => p.id === id));
     }
 
     private handleError(error: Response) {
@@ -33,4 +32,45 @@ export class ProductService {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }
+
+     saveProduct(product : IProduct) : Observable<IProduct>{
+        let headers = new Headers({'content-Type':'application/json'});
+        let options = new RequestOptions({headers : headers});
+        product.id = undefined;
+        if(product.id === 0){
+           return this.addProduct(product,options);
+        }
+             return this.updateProduct(product,options);
+
+    };
+
+    deleteProduct(id: number):Observable<Response>{
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        const url  = `${this._productUrl}/${id}`;
+
+        return this._http.delete(url, options)
+            .do(data => console.log('deletedProduct : ' + JSON.stringify(data)))
+            .catch(this.handleError);
+    }
+
+    private addProduct (product : IProduct,options: RequestOptions){
+        return this._http.post(this._productUrl,product,options)
+            .map(this.extractResponseData)
+            .do(data => console.log('createProduct : ' + JSON.stringify(data)))
+            .catch(this.handleError);
+    }
+   private  updateProduct(product: IProduct, options: RequestOptions){
+
+        return this._http.put(this._productUrl,options)
+            .map(()=> product)
+            .do(data => console.log('Update Product:'+ JSON.stringify(data)))
+            .catch(this.handleError);
+    }
+   private extractResponseData(response: Response){
+        let body = response.json();
+        return body.data || {};
+    }
 }
+

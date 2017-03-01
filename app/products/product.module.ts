@@ -9,6 +9,9 @@ import { ProductFilterPipe } from './product-filter.pipe';
 import { ProductService } from './product.service';
 
 import { SharedModule } from '../shared/shared.module';
+import {ReactiveFormsModule} from "@angular/forms";
+import { ProductAddGuard} from "./productAddGuard.service";
+import {ProductEditComponent} from "./product-edit.component";
 
 @NgModule({
   imports: [
@@ -18,17 +21,21 @@ import { SharedModule } from '../shared/shared.module';
       { path: 'product/:id',
         canActivate: [ ProductDetailGuard],
         component: ProductDetailComponent
-      }
-    ])
+      },
+        {path: 'productEdit/:id',canDeactivate:[ProductAddGuard],component : ProductEditComponent},
+    ]),
+      ReactiveFormsModule
   ],
   declarations: [
     ProductListComponent,
     ProductDetailComponent,
-    ProductFilterPipe
+    ProductFilterPipe,
+      ProductEditComponent
   ],
   providers: [
     ProductService,
-    ProductDetailGuard
+    ProductDetailGuard,
+      ProductAddGuard
   ]
 })
 export class ProductModule {}

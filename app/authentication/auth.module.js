@@ -15,6 +15,7 @@ var router_1 = require("@angular/router");
 var forms_1 = require("@angular/forms");
 var platform_browser_1 = require("@angular/platform-browser");
 var login_component_1 = require("./login.component");
+var http_1 = require("@angular/http");
 var AuthModel = (function () {
     function AuthModel() {
     }
@@ -29,7 +30,8 @@ AuthModel = __decorate([
             ]),
             forms_1.ReactiveFormsModule,
             platform_browser_1.BrowserModule,
-            forms_1.FormsModule
+            forms_1.FormsModule,
+            http_1.HttpModule
         ],
         declarations: [signUp_component_1.SignUpComponent,
             login_component_1.LoginComponent

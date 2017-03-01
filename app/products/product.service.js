@@ -24,18 +24,51 @@ var ProductService = (function () {
     ProductService.prototype.getProducts = function () {
         return this._http.get(this._productUrl)
             .map(function (response) { return response.json(); })
-            .do(function (data) { return console.log('All: ' + JSON.stringify(data)); })
             .catch(this.handleError);
     };
     ProductService.prototype.getProduct = function (id) {
         return this.getProducts()
-            .map(function (products) { return products.find(function (p) { return p.productId === id; }); });
+            .map(function (products) { return products.find(function (p) { return p.id === id; }); });
     };
     ProductService.prototype.handleError = function (error) {
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console
         console.error(error);
         return Observable_1.Observable.throw(error.json().error || 'Server error');
+    };
+    ProductService.prototype.saveProduct = function (product) {
+        var headers = new http_1.Headers({ 'content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        product.id = undefined;
+        if (product.id === 0) {
+            return this.addProduct(product, options);
+        }
+        return this.updateProduct(product, options);
+    };
+    ;
+    ProductService.prototype.deleteProduct = function (id) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        var url = this._productUrl + "/" + id;
+        return this._http.delete(url, options)
+            .do(function (data) { return console.log('deletedProduct : ' + JSON.stringify(data)); })
+            .catch(this.handleError);
+    };
+    ProductService.prototype.addProduct = function (product, options) {
+        return this._http.post(this._productUrl, product, options)
+            .map(this.extractResponseData)
+            .do(function (data) { return console.log('createProduct : ' + JSON.stringify(data)); })
+            .catch(this.handleError);
+    };
+    ProductService.prototype.updateProduct = function (product, options) {
+        return this._http.put(this._productUrl, options)
+            .map(function () { return product; })
+            .do(function (data) { return console.log('Update Product:' + JSON.stringify(data)); })
+            .catch(this.handleError);
+    };
+    ProductService.prototype.extractResponseData = function (response) {
+        var body = response.json();
+        return body.data || {};
     };
     return ProductService;
 }());

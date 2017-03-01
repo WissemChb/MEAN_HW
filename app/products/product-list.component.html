@@ -59,6 +59,14 @@
                                     (ratingClicked)='onRatingClicked($event)'>
                             </ai-star>
                        </td>
+                        <td>
+                            <a [routerLink]="['/productEdit',product.id]" class="btn btn-info">Edit</a>
+                        </td>
+                        <td>
+                            <a  class="btn btn-danger" (click)="deleteProduct()">
+                                Delete
+                            </a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
