@@ -12,6 +12,7 @@ import { SharedModule } from '../shared/shared.module';
 import {ReactiveFormsModule} from "@angular/forms";
 import { ProductAddGuard} from "./productAddGuard.service";
 import {ProductEditComponent} from "./product-edit.component";
+//import {ProductAddComponent} from "./product-add.component";
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import {ProductEditComponent} from "./product-edit.component";
     ProductListComponent,
     ProductDetailComponent,
     ProductFilterPipe,
-      ProductEditComponent
+      ProductEditComponent,
+      //ProductAddComponent
   ],
   providers: [
     ProductService,

@@ -17,6 +17,7 @@ var shared_module_1 = require("../shared/shared.module");
 var forms_1 = require("@angular/forms");
 var productAddGuard_service_1 = require("./productAddGuard.service");
 var product_edit_component_1 = require("./product-edit.component");
+//import {ProductAddComponent} from "./product-add.component";
 var ProductModule = (function () {
     function ProductModule() {
     }
@@ -40,7 +41,7 @@ ProductModule = __decorate([
             product_list_component_1.ProductListComponent,
             product_detail_component_1.ProductDetailComponent,
             product_filter_pipe_1.ProductFilterPipe,
-            product_edit_component_1.ProductEditComponent
+            product_edit_component_1.ProductEditComponent,
         ],
         providers: [
             product_service_1.ProductService,

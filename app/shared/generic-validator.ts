@@ -9,7 +9,6 @@ import {FormGroup} from "@angular/forms";
 export class GenericValidator {
     constructor(private validationMessage:{[key : string]:{[key : string] : string}}){}
 
-
     processMessage(container : FormGroup) : { [key: string] : string }{
         let message = {};
         for(let controlKey in container.controls){
@@ -21,6 +20,7 @@ export class GenericValidator {
 
                 } else {
                     if ((c.dirty || c.touched) && c.errors) {
+                        message[controlKey]='';
                         Object.keys(c.errors).map(messageKey => {
                             if (this.validationMessage[controlKey][messageKey]) {
                                 message[controlKey] += this.validationMessage[controlKey][messageKey] + ' ';

@@ -13,17 +13,20 @@ import { IProduct } from './product';
 export class ProductService {
     private _productUrl = 'http://localhost:5000/api/products';
 
-    constructor(private _http: Http) { }
+    constructor(private _http: Http){ }
 
     getProducts(): Observable<IProduct[]> {
+
+
         return this._http.get(this._productUrl)
             .map((response: Response) => <IProduct[]> response.json())
             .catch(this.handleError);
+
     }
 
     getProduct(id: number): Observable<IProduct> {
         return this.getProducts()
-            .map((products: IProduct[]) => products.find(p => p.id === id));
+            .map((products: IProduct[]) => products.find((p: IProduct) => p.id === id));
     }
 
     private handleError(error: Response) {
@@ -36,11 +39,10 @@ export class ProductService {
      saveProduct(product : IProduct) : Observable<IProduct>{
         let headers = new Headers({'content-Type':'application/json'});
         let options = new RequestOptions({headers : headers});
-        product.id = undefined;
-        if(product.id === 0){
-           return this.addProduct(product,options);
+        if(product.id !== 0){
+            return this.updateProduct(product,options);
         }
-             return this.updateProduct(product,options);
+         return this.addProduct(product,options);
 
     };
 

@@ -26,7 +26,7 @@
                 <thead>
                     <tr>
                         <th>
-                            <button class='btn btn-primary'
+                            <button class='btn btn-info'
                                 (click)='toggleImage()'>
                                 {{showImage ? 'Hide' : 'Show'}} Image
                             </button>
@@ -47,7 +47,7 @@
                                  [style.width.px]='imageWidth' 
                                  [style.margin.px]='imageMargin'>
                         </td>
-                        <td><a [routerLink]="['/product', product.productId]">
+                        <td><a [routerLink]="['/product',product.id]">
                             {{product.productName}}
                             </a>
                         </td>
@@ -60,10 +60,10 @@
                             </ai-star>
                        </td>
                         <td>
-                            <a [routerLink]="['/productEdit',product.id]" class="btn btn-info">Edit</a>
+                            <a [routerLink]="['/productEdit',product.id]" style="width:80px" class="btn btn-info">Edit</a>
                         </td>
                         <td>
-                            <a  class="btn btn-danger" (click)="deleteProduct()">
+                            <a  class="btn btn-danger" style="width:80px" (click)="OndeleteProduct(product.id)">
                                 Delete
                             </a>
                         </td>

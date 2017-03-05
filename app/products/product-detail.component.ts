@@ -20,7 +20,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
                 private _router: Router,
                 private _productService: ProductService) {
     }
-
     ngOnInit(): void {
         this.sub = this._route.params.subscribe(
             params => {
@@ -32,7 +31,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.sub.unsubscribe();
     }
-
     getProduct(id: number) {
         this._productService.getProduct(id).subscribe(
             product => this.product = product,

@@ -18,13 +18,13 @@ import { GenericValidator } from '../shared/generic-validator';
 @Component({
     templateUrl: 'app/products/product-edit.component.html'
 })
-export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ProductEditComponent implements OnInit, AfterViewInit,OnDestroy {
     @ViewChildren(FormControlName, {read: ElementRef}) formInputElements: ElementRef[];
 
     pageTitle: string = 'Product Edit';
     errorMessage: string;
     productForm: FormGroup;
-
+    hideDelete : boolean = false;
     product: IProduct;
     private sub: Subscription;
 
@@ -78,9 +78,9 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
         this.sub = this.route.params.subscribe(
             params => {
                 let id = +params['id'];
-                this.getProduct(id);
-            }
-        );
+                 this.onRedirectProductUpdate(id);
+            });
+
     }
 
     ngOnDestroy(): void {
@@ -91,9 +91,8 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
         // Watch for the blur event from any input element on the form.
         let controlBlurs: Observable<any>[] = this.formInputElements
             .map((formControl: ElementRef) => Observable.fromEvent(formControl.nativeElement, 'blur'));
-
         // Merge the blur event observable with the valueChanges observable
-        Observable.merge(this.productForm.valueChanges, ...controlBlurs).debounceTime(800).subscribe(value => {
+        Observable.merge(this.productForm.valueChanges, ...controlBlurs).debounceTime(1000).subscribe(value => {
             this.displayMessage = this.genericValidator.processMessage(this.productForm);
         });
     }
@@ -102,38 +101,28 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
         this.tags.push(new FormControl());
     }
 
-    getProduct(id: number): void {
+    getProduct(id : number): void {
+
         this.productService.getProduct(id)
-            .subscribe(
-                (product: IProduct) => this.onProductRetrieved(product),
-                (error: any) => this.errorMessage = <any>error
-            );
+            .subscribe( (product: IProduct) => this.getProduct(id),
+                (error: any) => this.errorMessage = <any>error );
     }
 
-    onProductRetrieved(product: IProduct): void {
-        if (this.productForm) {
-            this.productForm.reset();
-        }
-        this.product = product;
+    onRedirectProductUpdate(id: number): void {
 
-        if (this.product.id === 0) {
-            this.pageTitle = 'Add Product';
-        } else {
-            this.pageTitle = `Edit Product: ${this.product.productName}`;
-        }
+        if(id === 0) {
+            this.pageTitle ='Add Product';
+            this.hideDelete = true;
+        }else{
+            this.pageTitle = 'Edit Product ';
+            this.getProduct(id);
 
-        // Update the data on the form
-        this.productForm.patchValue({
-            productName: this.product.productName,
-            productCode: this.product.productCode,
-            starRating: this.product.starRating,
-            description: this.product.description
-        });
-        this.productForm.setControl('tags', this.fb.array(this.product.tags || []));
+    }
     }
 
-    deleteProduct(): void {
-        if (this.product.id === 0) {
+
+    deleteProduct(id :number): void {
+        if (id === 0) {
             // Don't delete, it was never saved.
             this.onSaveComplete();
         } else {
@@ -144,10 +133,10 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
                         (error: any) => this.errorMessage = <any>error
                     );
             }
-        }
-    }
+        }}
 
     saveProduct(): void {
+
         if (this.productForm.dirty && this.productForm.valid) {
             // Copy the form values over the product object values
             let p = Object.assign({}, this.product, this.productForm.value);
@@ -157,7 +146,8 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
                     () => this.onSaveComplete(),
                     (error: any) => this.errorMessage = <any>error
                 );
-        } else if (!this.productForm.dirty) {
+        } else if (this.productForm.touched && !this.productForm.dirty) {
+
             this.onSaveComplete();
         }
     }

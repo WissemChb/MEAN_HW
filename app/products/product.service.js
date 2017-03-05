@@ -39,11 +39,10 @@ var ProductService = (function () {
     ProductService.prototype.saveProduct = function (product) {
         var headers = new http_1.Headers({ 'content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
-        product.id = undefined;
-        if (product.id === 0) {
-            return this.addProduct(product, options);
+        if (product.id !== 0) {
+            return this.updateProduct(product, options);
         }
-        return this.updateProduct(product, options);
+        return this.addProduct(product, options);
     };
     ;
     ProductService.prototype.deleteProduct = function (id) {

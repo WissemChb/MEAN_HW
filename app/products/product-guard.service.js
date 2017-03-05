@@ -17,6 +17,7 @@ var ProductDetailGuard = (function () {
     }
     ProductDetailGuard.prototype.canActivate = function (route) {
         var id = +route.url[1].path;
+        console.log(route.url);
         if (isNaN(id) || id < 1) {
             alert('Invalid product Id');
             // start a new navigation to redirect to list page

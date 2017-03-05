@@ -26,6 +26,7 @@ var ProductEditComponent = (function () {
         this.router = router;
         this.productService = productService;
         this.pageTitle = 'Product Edit';
+        this.hideDelete = false;
         // Use with the generic validation message class
         this.displayMessage = {};
         // Defines all of the validation messages for the form.
@@ -68,7 +69,7 @@ var ProductEditComponent = (function () {
         // Read the product Id from the route parameter
         this.sub = this.route.params.subscribe(function (params) {
             var id = +params['id'];
-            _this.getProduct(id);
+            _this.onRedirectProductUpdate(id);
         });
     };
     ProductEditComponent.prototype.ngOnDestroy = function () {
@@ -80,7 +81,7 @@ var ProductEditComponent = (function () {
         var controlBlurs = this.formInputElements
             .map(function (formControl) { return Observable_1.Observable.fromEvent(formControl.nativeElement, 'blur'); });
         // Merge the blur event observable with the valueChanges observable
-        Observable_1.Observable.merge.apply(Observable_1.Observable, [this.productForm.valueChanges].concat(controlBlurs)).debounceTime(800).subscribe(function (value) {
+        Observable_1.Observable.merge.apply(Observable_1.Observable, [this.productForm.valueChanges].concat(controlBlurs)).debounceTime(1000).subscribe(function (value) {
             _this.displayMessage = _this.genericValidator.processMessage(_this.productForm);
         });
     };
@@ -90,31 +91,21 @@ var ProductEditComponent = (function () {
     ProductEditComponent.prototype.getProduct = function (id) {
         var _this = this;
         this.productService.getProduct(id)
-            .subscribe(function (product) { return _this.onProductRetrieved(product); }, function (error) { return _this.errorMessage = error; });
+            .subscribe(function (product) { return _this.getProduct(id); }, function (error) { return _this.errorMessage = error; });
     };
-    ProductEditComponent.prototype.onProductRetrieved = function (product) {
-        if (this.productForm) {
-            this.productForm.reset();
-        }
-        this.product = product;
-        if (this.product.id === 0) {
+    ProductEditComponent.prototype.onRedirectProductUpdate = function (id) {
+        if (id === 0) {
             this.pageTitle = 'Add Product';
+            this.hideDelete = true;
         }
         else {
-            this.pageTitle = "Edit Product: " + this.product.productName;
+            this.pageTitle = 'Edit Product ';
+            this.getProduct(id);
         }
-        // Update the data on the form
-        this.productForm.patchValue({
-            productName: this.product.productName,
-            productCode: this.product.productCode,
-            starRating: this.product.starRating,
-            description: this.product.description
-        });
-        this.productForm.setControl('tags', this.fb.array(this.product.tags || []));
     };
-    ProductEditComponent.prototype.deleteProduct = function () {
+    ProductEditComponent.prototype.deleteProduct = function (id) {
         var _this = this;
-        if (this.product.id === 0) {
+        if (id === 0) {
             // Don't delete, it was never saved.
             this.onSaveComplete();
         }
@@ -133,7 +124,7 @@ var ProductEditComponent = (function () {
             this.productService.saveProduct(p)
                 .subscribe(function () { return _this.onSaveComplete(); }, function (error) { return _this.errorMessage = error; });
         }
-        else if (!this.productForm.dirty) {
+        else if (this.productForm.touched && !this.productForm.dirty) {
             this.onSaveComplete();
         }
     };
